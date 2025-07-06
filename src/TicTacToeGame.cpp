@@ -1,5 +1,6 @@
+// AI fix: Removed the include unused iostream
 #include "../include/TicTacToeGame.h"
-#include <iostream>
+
 
 TicTacToeGame::TicTacToeGame() : gameOver(false), currentPlayer(Player::HUMAN) {
     // Initialize GTK
@@ -134,6 +135,7 @@ void TicTacToeGame::updateStatusLabel() {
     } else {
         gtk_label_set_text(GTK_LABEL(statusLabel), "Computer is thinking...");
     }
+    gameBoard.printBoard(); // For debugging, can be removed later
 }
 
 void TicTacToeGame::checkGameEnd() {

@@ -13,6 +13,15 @@ void GameBoard::reset() {
     }
 }
 
+// AI Fix: Added forceMove to allow AI to set a cell directly
+void GameBoard::forceMove(int row, int col, Player player) {
+    if (row >= 0 && row < 3 && col >= 0 && col < 3) {
+        board[row][col] = player;
+    } else {
+        std::cerr << "Invalid move position: (" << row << ", " << col << ")\n";
+    }
+}
+
 bool GameBoard::makeMove(int row, int col, Player player) {
     if (isValidMove(row, col)) {
         board[row][col] = player;
