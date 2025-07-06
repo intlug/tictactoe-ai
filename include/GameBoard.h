@@ -14,6 +14,7 @@ private:
 public:
     GameBoard();
     void reset();
+    void forceMove(int row, int col, Player player);  // AI Fix: Added forceMove to allow AI to set a cell directly
     bool makeMove(int row, int col, Player player);
     Player getCell(int row, int col) const;
     bool isFull() const;

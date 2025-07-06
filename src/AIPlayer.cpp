@@ -1,5 +1,6 @@
-#include "../include/AIPlayer.h"
+// AI fix: Moved limits to the top to handle standard includes first.
 #include <limits>
+#include "../include/AIPlayer.h"
 
 std::pair<int, int> AIPlayer::getBestMove(GameBoard& board) {
     int bestScore = std::numeric_limits<int>::min();
@@ -10,7 +11,8 @@ std::pair<int, int> AIPlayer::getBestMove(GameBoard& board) {
             if (board.isValidMove(i, j)) {
                 board.makeMove(i, j, Player::COMPUTER);
                 int score = minimax(board, 0, false, std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
-                board.makeMove(i, j, Player::NONE); // Undo move
+                board.forceMove(i, j, Player::NONE);
+                // AI Fix - do not call "makeMove" with Player::NONE 
                 
                 if (score > bestScore) {
                     bestScore = score;
@@ -38,7 +40,8 @@ int AIPlayer::minimax(GameBoard& board, int depth, bool isMaximizing, int alpha,
                 if (board.isValidMove(i, j)) {
                     board.makeMove(i, j, Player::COMPUTER);
                     int eval = minimax(board, depth + 1, false, alpha, beta);
-                    board.makeMove(i, j, Player::NONE); // Undo move
+                    board.forceMove(i, j, Player::NONE); // Undo move
+                    // AI Fix - do not call "makeMove" with Player - use forceMove instead
                     maxEval = std::max(maxEval, eval);
                     alpha = std::max(alpha, eval);
                     if (beta <= alpha) break; // Alpha-beta pruning
@@ -54,7 +57,8 @@ int AIPlayer::minimax(GameBoard& board, int depth, bool isMaximizing, int alpha,
                 if (board.isValidMove(i, j)) {
                     board.makeMove(i, j, Player::HUMAN);
                     int eval = minimax(board, depth + 1, true, alpha, beta);
-                    board.makeMove(i, j, Player::NONE); // Undo move
+                    board.forceMove(i, j, Player::NONE); // Undo move
+                    // AI Fix - do not call "makeMove" with Player - use forceMove instead
                     minEval = std::min(minEval, eval);
                     beta = std::min(beta, eval);
                     if (beta <= alpha) break; // Alpha-beta pruning

@@ -28,7 +28,7 @@ target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES})
 
 # Set compile flags for debug builds
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_options(${PROJECT_NAME} PRIVATE -g -O0 -Wall -Wextra)
+    target_compile_options(${PROJECT_NAME} PRIVATE ${GTK3_CFLAGS_OTHER} -g -O0 -Wall -Wextra)
 endif()
 
 # Install target
